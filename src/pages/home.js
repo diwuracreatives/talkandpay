@@ -10,29 +10,28 @@ import { useNavigate } from "react-router-dom";
 export default function Home() {
   const navigate = useNavigate();
 
-  const greetingText = "Welcome to Talk and Pay, is this your first time here? Reply with yes or no.";
+  const greetingText =
+    "Welcome to Talk and Pay, please say login to continue";
 
   useEffect(() => {
     TextToSpeech(greetingText);
   }, []);
 
-  const { isSpeaking, recognizedText } = useSpeechToText();;
+  const { isSpeaking, recognizedText } = useSpeechToText();
 
   useEffect(() => {
     if (!recognizedText) return; // Avoid running on empty text
-    if (wordSearch(recognizedText, "no")) {
+    if (wordSearch(recognizedText, "login")) {
       navigate("/login"); // Navigate to login page
     } else {
-      alert("yello");
+      console.log(recognizedText);
     }
   }, [recognizedText, navigate]);
 
   return (
     <>
-
       <Navbar />
       <div className="content flex flex-col items-center justify-center mt-36">
-
         <div className="event-status-icon">
           {isSpeaking ? <PulsingMicrophone /> : <PulsingSpeaker />}
         </div>
@@ -40,11 +39,11 @@ export default function Home() {
         <div className="transcript mt-10 text-center">
           <p>{isSpeaking ? "Listening..." : "Waiting for Speech..."}</p>
           <p>
-            <strong>Recognized Text:</strong> {recognizedText || "Start speaking..."}
+            <strong>Recognized Text:</strong>{" "}
+            {recognizedText || "Start speaking..."}
           </p>
         </div>
       </div>
-
     </>
   );
 }
