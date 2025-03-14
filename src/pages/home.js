@@ -11,7 +11,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   const greetingText =
-    "Welcome to Talk and Pay, please say login to continue";
+    "Welcome to Talk and Pay, is this your first time here? Reply with Yes or No.";
 
   useEffect(() => {
     TextToSpeech(greetingText);
@@ -21,7 +21,7 @@ export default function Home() {
 
   useEffect(() => {
     if (!recognizedText) return; // Avoid running on empty text
-    if (wordSearch(recognizedText, "login")) {
+    if (wordSearch(recognizedText, "no")) {
       navigate("/login"); // Navigate to login page
     } else {
       console.log(recognizedText);
